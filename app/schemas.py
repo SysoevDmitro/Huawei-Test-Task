@@ -12,7 +12,7 @@ class UserOut(BaseModel):
     is_admin: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class FileOut(BaseModel):
@@ -21,4 +21,8 @@ class FileOut(BaseModel):
     upload_count: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+
+class TokenData(BaseModel):
+    username: str | None = None
