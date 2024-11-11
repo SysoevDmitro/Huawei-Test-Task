@@ -20,5 +20,6 @@ class File(Base):
     filename = Column(String, unique=True)
     path = Column(String)
     upload_count = Column(Integer, default=0)
+    access_granted = Column(Boolean, default=False)
     owner_id = Column(Integer, ForeignKey('users.id'))
     owner = relationship('User')
