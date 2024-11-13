@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <style>
+body {
+            font-family: Arial, sans-serif; /* Шрифт для страницы */
+            background-color: #f4f4f4; /* Светлый фон */
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .profile-container {
+            background-color: #fff; /* Белый фон для контейнера */
+            border-radius: 8px; /* Скругленные углы */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень для глубины */
+            padding: 20px;
+
+            text-align: center;
+        }
+
+        h2 {
+            color: #4CAF50; /* Зеленый цвет для заголовка */
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #555; /* Темно-серый цвет для текста */
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        a {
+            text-decoration: none;  /* Убираем подчеркивание */
+            color: #fff;  /* Белый текст */
+            background-color: #4CAF50; /* Зеленый фон */
+            padding: 10px 20px;  /* Внутренние отступы */
+            border-radius: 5px;  /* Скругленные углы */
+            font-weight: bold;  /* Жирный шрифт */
+            transition: background-color 0.3s, transform 0.3s;  /* Плавный переход */
+        }
+
+        a:hover {
+            background-color: #45a049; /* Более темный зеленый при наведении */
+            transform: scale(1.05);  /* Эффект увеличения при наведении */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-container">
+        <h2>Welcome, {{ user.username }}</h2>
+        <p>Other details can be displayed here...</p>
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+{% endblock content %}

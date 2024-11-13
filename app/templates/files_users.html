@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <head>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+  <style>
+      body {
+            font-family: Arial, sans-serif; /* Шрифт для страницы */
+            background-color: #f4f4f4; /* Светлый фон */
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        /* Основной стиль для таблицы */
+        table {
+            width: 80%;  /* Ширина таблицы */
+            margin: 20px auto;  /* Отступ сверху и снизу */
+            border-collapse: collapse;  /* Убираем промежутки между ячейками */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  /* Тень вокруг таблицы */
+        }
+
+        /* Стиль для заголовков таблицы */
+        th {
+            background-color: #4CAF50;  /* Зеленый фон для заголовков */
+            color: white;  /* Белый цвет текста */
+            padding: 12px 15px;  /* Отступы для заголовков */
+            text-align: left;  /* Выравнивание текста по левому краю */
+            border: 1px solid #ddd;  /* Легкая граница */
+        }
+
+        /* Стиль для ячеек таблицы */
+        td {
+            padding: 10px 15px;  /* Отступы для ячеек */
+            border: 1px solid #ddd;  /* Легкая граница вокруг ячеек */
+            text-align: left;  /* Выравнивание текста по левому краю */
+        }
+
+        /* Стиль для четных строк (чтобы они отличались от нечетных) */
+        tr:nth-child(even) {
+            background-color: #f9f9f9;  /* Легкий серый фон для четных строк */
+        }
+
+        /* Стиль для строк при наведении */
+        tr:hover {
+            background-color: #f1f1f1;  /* Более темный фон при наведении */
+        }
+
+        /* Заголовок страницы */
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+  <body>
+    <h1>Files</h1>
+    <table>
+    <tr>
+      <th>File Name</th>
+      <th>File Path</th>
+      <th>Uploaded By</th>
+      <th>Upload Count</th>
+      <th>Download</th>
+    </tr>
+  {% for file in files %}
+    <tr>
+      <td>{{ file.filename }}</td>
+      <td>{{ file.path }}</td>
+      <td>{{ file.owner_id }}</td>
+      <td>{{ file.upload_count }}</td>
+      <td><a href="/download/{{ file.id }}" class="button">Download</a></td>
+
+    </tr>
+  {% endfor %}
+    </table>
+</body>
+
+{% endblock content %}

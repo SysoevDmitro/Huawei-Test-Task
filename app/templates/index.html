@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+    <style>
+body {
+            font-family: Arial, sans-serif; /* Шрифт для страницы */
+            background-color: #f4f4f4; /* Светлый фон */
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #4CAF50; /* Зеленый цвет для заголовка */
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 20px;
+            color: #555; /* Темно-серый цвет для текста */
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .content-container {
+            background-color: #fff; /* Белый фон для контента */
+            border-radius: 10px; /* Скругленные углы */
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            width: 80%;
+            max-width: 600px; /* Максимальная ширина */
+        }
+
+        .cta-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            margin-top: 30px;
+            display: inline-block;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #45a049; /* Темный зеленый при наведении */
+            transform: scale(1.05); /* Эффект увеличения */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content-container">
+        <h1>Home Page</h1>
+        <p>Welcome to the file sharing platform! Share, upload, and download files with ease.</p>
+        <a href="/files" class="cta-button">Explore Files</a>
+    </div>
+</body>
+
+{% endblock content %}

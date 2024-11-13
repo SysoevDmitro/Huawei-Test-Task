@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation</title>
+    <style>
+        /* Общий стиль для ссылок */
+        a {
+            text-decoration: none;  /* Убираем подчеркивание */
+            color: #fff;  /* Белый текст */
+            background-color: #4CAF50; /* Зеленый фон */
+            padding: 10px 20px;  /* Внутренние отступы */
+            border-radius: 5px;  /* Скругленные углы */
+            font-weight: bold;  /* Жирный шрифт */
+            transition: background-color 0.3s, transform 0.3s;  /* Плавный переход */
+        }
+
+        a:hover {
+            background-color: #45a049; /* Более темный зеленый при наведении */
+            transform: scale(1.05);  /* Эффект увеличения при наведении */
+        }
+
+        /* Стиль для блока навигации */
+        .navbar {
+            display: flex;  /* Flexbox для горизонтального выравнивания */
+            justify-content: center;  /* Центрирование ссылок */
+            align-items: center;  /* Выравнивание по вертикали */
+            margin: 20px 0;  /* Отступы сверху и снизу */
+        }
+
+        /* Стиль для разделителей между ссылками */
+        .navbar a:not(:last-child) {
+            margin-right: 10px;  /* Отступ справа от ссылки */
+            border-right: 2px solid #4CAF50;  /* Разделитель между ссылками */
+        }
+
+        /* Стиль для контейнера, если пользователь не залогинен */
+        .auth-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Стиль для контейнера, если пользователь залогинен */
+        .user-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        {% if user %}
+            <div class="user-links">
+                <a href="/">Home</a>
+                <a href="/profile">Profile</a>
+                {% if user.is_admin %}
+                    <a href="/upload">Upload file</a>
+                    <a href="/files">Files</a>
+                  {% else %}
+                  <a href="/files/users">Files</a>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="auth-links">
+                <a href="/">Home</a>
+                <a href="/login">Sign in</a>
+                <a href="/register">Sign up</a>
+            </div>
+        {% endif %}
+    </div>
+
+    {% block content %}
+
+    {% endblock content %}
+
+</body>
+</html>

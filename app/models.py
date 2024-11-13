@@ -11,7 +11,7 @@ class User(Base):
     password = Column(String)
     is_admin = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
-    files = relationship('File', back_populates='owner')
+    files = relationship('File', back_populates='owner', lazy="selectin")
 
 
 class File(Base):
@@ -22,4 +22,4 @@ class File(Base):
     upload_count = Column(Integer, default=0)
     access_granted = Column(Boolean, default=False)
     owner_id = Column(Integer, ForeignKey('users.id'))
-    owner = relationship('User')
+    owner = relationship('User', back_populates='files', lazy="selectin")

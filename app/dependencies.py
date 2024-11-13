@@ -1,7 +1,11 @@
+import os
 from datetime import datetime, timedelta
 
+from starlette.responses import RedirectResponse
+from starlette.templating import Jinja2Templates
+
 from .database import SessionLocal
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
@@ -13,6 +17,7 @@ from .models import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
 
 
 async def get_db():
@@ -36,7 +41,7 @@ def create_access_token(data: dict):
     return encoded_jwt
 
 
-async def get_user(db: AsyncSession = Depends(get_db), id: int = None, username: str = None) -> User:
+async def get_user(db: AsyncSession, id: int = None, username: str = None) -> User:
     if id:
         result = await db.execute(select(User).filter(User.id == id))
         return result.scalars().first()
@@ -45,25 +50,25 @@ async def get_user(db: AsyncSession = Depends(get_db), id: int = None, username:
         return result.scalars().first()
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme), db: AsyncSession = Depends(get_db)) -> User:
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"}
-    )
+async def get_current_user(request: Request, db: AsyncSession = Depends(get_db)):
+    token = request.cookies.get("access_token")
+    if not token:
+        return False
 
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        decode_username: str = payload.get("username")
-
-        if decode_username is None:
-            raise credentials_exception
+        username: str = payload.get("username")
+        if username is None:
+            return False
     except JWTError:
-        raise credentials_exception
+        return False
 
-    user = await get_user(db, username=decode_username)
+    user = await get_user(db=db, username=username)
 
-    if user is None:
-        raise credentials_exception
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
 
     return user

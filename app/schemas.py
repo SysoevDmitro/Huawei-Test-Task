@@ -16,9 +16,7 @@ class UserOut(BaseModel):
 
 
 class FileOut(BaseModel):
-    id: int
-    filename: str
-    upload_count: int
+    access_granted: bool
 
     class Config:
         from_attributes = True
